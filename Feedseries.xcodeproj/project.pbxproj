@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F524F941745BA42008175FB /* EpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F524F931745BA42008175FB /* EpisodeCell.m */; };
 		7F6024F217433363000971A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F117433363000971A3 /* UIKit.framework */; };
 		7F6024F417433363000971A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F317433363000971A3 /* Foundation.framework */; };
 		7F6024F617433363000971A3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F517433363000971A3 /* CoreGraphics.framework */; };
@@ -17,12 +18,9 @@
 		7F60250617433363000971A3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F60250517433363000971A3 /* Default@2x.png */; };
 		7F60250817433363000971A3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F60250717433363000971A3 /* Default-568h@2x.png */; };
 		7F60250B17433363000971A3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F60250917433363000971A3 /* MainStoryboard.storyboard */; };
-		7F60250E17433363000971A3 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60250D17433363000971A3 /* FirstViewController.m */; };
+		7F60250E17433363000971A3 /* MyShowsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60250D17433363000971A3 /* MyShowsViewController.m */; };
 		7F60251017433363000971A3 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F60250F17433363000971A3 /* first.png */; };
 		7F60251217433363000971A3 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F60251117433363000971A3 /* first@2x.png */; };
-		7F60251517433363000971A3 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F60251417433363000971A3 /* SecondViewController.m */; };
-		7F60251717433363000971A3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F60251617433363000971A3 /* second.png */; };
-		7F60251917433363000971A3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F60251817433363000971A3 /* second@2x.png */; };
 		7F60252117433363000971A3 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F60252017433363000971A3 /* SenTestingKit.framework */; };
 		7F60252217433363000971A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F117433363000971A3 /* UIKit.framework */; };
 		7F60252317433363000971A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F317433363000971A3 /* Foundation.framework */; };
@@ -41,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F524F921745BA42008175FB /* EpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EpisodeCell.h; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/EpisodeCell.h"; sourceTree = "<group>"; };
+		7F524F931745BA42008175FB /* EpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EpisodeCell.m; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/EpisodeCell.m"; sourceTree = "<group>"; };
 		7F6024ED17433363000971A3 /* Feedseries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Feedseries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F6024F117433363000971A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7F6024F317433363000971A3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -55,14 +55,10 @@
 		7F60250517433363000971A3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		7F60250717433363000971A3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		7F60250A17433363000971A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		7F60250C17433363000971A3 /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		7F60250D17433363000971A3 /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		7F60250C17433363000971A3 /* MyShowsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyShowsViewController.h; sourceTree = "<group>"; };
+		7F60250D17433363000971A3 /* MyShowsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyShowsViewController.m; sourceTree = "<group>"; };
 		7F60250F17433363000971A3 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		7F60251117433363000971A3 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		7F60251317433363000971A3 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		7F60251417433363000971A3 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		7F60251617433363000971A3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
-		7F60251817433363000971A3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		7F60251F17433363000971A3 /* FeedseriesTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FeedseriesTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F60252017433363000971A3 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		7F60252817433363000971A3 /* FeedseriesTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FeedseriesTests-Info.plist"; sourceTree = "<group>"; };
@@ -131,15 +127,13 @@
 				7F60250017433363000971A3 /* AppDelegate.h */,
 				7F60250117433363000971A3 /* AppDelegate.m */,
 				7F60250917433363000971A3 /* MainStoryboard.storyboard */,
-				7F60250C17433363000971A3 /* FirstViewController.h */,
-				7F60250D17433363000971A3 /* FirstViewController.m */,
+				7F60250C17433363000971A3 /* MyShowsViewController.h */,
+				7F60250D17433363000971A3 /* MyShowsViewController.m */,
 				7F60250F17433363000971A3 /* first.png */,
 				7F60251117433363000971A3 /* first@2x.png */,
-				7F60251317433363000971A3 /* SecondViewController.h */,
-				7F60251417433363000971A3 /* SecondViewController.m */,
-				7F60251617433363000971A3 /* second.png */,
-				7F60251817433363000971A3 /* second@2x.png */,
 				7F6024F817433363000971A3 /* Supporting Files */,
+				7F524F921745BA42008175FB /* EpisodeCell.h */,
+				7F524F931745BA42008175FB /* EpisodeCell.m */,
 			);
 			path = Feedseries;
 			sourceTree = "<group>";
@@ -255,8 +249,6 @@
 				7F60250B17433363000971A3 /* MainStoryboard.storyboard in Resources */,
 				7F60251017433363000971A3 /* first.png in Resources */,
 				7F60251217433363000971A3 /* first@2x.png in Resources */,
-				7F60251717433363000971A3 /* second.png in Resources */,
-				7F60251917433363000971A3 /* second@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,8 +285,8 @@
 			files = (
 				7F6024FE17433363000971A3 /* main.m in Sources */,
 				7F60250217433363000971A3 /* AppDelegate.m in Sources */,
-				7F60250E17433363000971A3 /* FirstViewController.m in Sources */,
-				7F60251517433363000971A3 /* SecondViewController.m in Sources */,
+				7F60250E17433363000971A3 /* MyShowsViewController.m in Sources */,
+				7F524F941745BA42008175FB /* EpisodeCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +461,7 @@
 				7F60253317433363000971A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7F60253417433363000971A3 /* Build configuration list for PBXNativeTarget "FeedseriesTests" */ = {
 			isa = XCConfigurationList;
@@ -477,6 +470,7 @@
 				7F60253617433363000971A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
