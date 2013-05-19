@@ -8,9 +8,11 @@
 
 #import "myShowsViewController.h"
 #import "EpisodeCell.h"
+#import "StoredVars.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
-#define kjsonURL [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodes"]
+#define allEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodes"]
+#define myEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodesByUser"]
 
 @interface MyShowsViewController ()
 {
@@ -21,6 +23,7 @@
     NSInteger offset;
     NSInteger limit;
     UIActivityIndicatorView *spinner;
+    NSURL *kjsonURL;
 }
 @end
 
@@ -29,6 +32,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if ([self.restorationIdentifier isEqualToString:@"myShows"])
+        kjsonURL=[NSString stringWithFormat:@"%@?email=%@",myEpisodes,[StoredVars sharedInstance].userId];
+    else
+        kjsonURL=allEpisodes;
     
     //Init
     offset=0;
@@ -44,8 +52,13 @@
         spinner.tag = 12;
         [self.view addSubview:spinner];
         [spinner startAnimating];
+        NSString *apiEpisodes;
         //Callout
-        NSString *apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
+        if ([self.restorationIdentifier isEqualToString:@"myShows"])
+            apiEpisodes= kjsonURL;
+        else
+            apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
+        
         NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
     });
@@ -94,7 +107,7 @@
         NSDictionary *episode =[jsonResults objectAtIndex:indexPath.row];
         Cell.title.text= [NSString stringWithFormat:@"%@ - %@ ", [episode objectForKey:@"showTitle"], [episode objectForKey:@"firstAired"]];
         Cell.subtitle.text=[NSString stringWithFormat:@"%@  %@x%@ ", [episode objectForKey:@"title"], [episode objectForKey:@"season"], [episode objectForKey:@"number"]];
-        Cell.episodeImage.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[episode objectForKey:@"poster"]]]];;
+        //Cell.episodeImage.image= [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[episode objectForKey:@"poster"]]]];;
     }else if( dataRows>1){
         Cell.title.text=@"Ver mas";
         Cell.subtitle.text=@"";
@@ -119,7 +132,11 @@
         [spinner startAnimating];
         dispatch_async(kBgQueue, ^{
             //Callout
-            NSString *apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
+            NSString *apiEpisodes;
+            if ([self.restorationIdentifier isEqualToString:@"myShows"])
+                apiEpisodes= kjsonURL;
+            else
+                apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
             NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
             if(data!=nil)
                 [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];

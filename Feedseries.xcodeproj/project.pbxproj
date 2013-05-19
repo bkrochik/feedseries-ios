@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F2900E217480B5C0076C341 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2900E117480B5C0076C341 /* LoginViewController.m */; };
+		7F2900E717482AED0076C341 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2900E617482AED0076C341 /* SettingsViewController.m */; };
+		7F2900EB174840B70076C341 /* StoredVars.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2900EA174840B70076C341 /* StoredVars.m */; };
 		7F524F941745BA42008175FB /* EpisodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F524F931745BA42008175FB /* EpisodeCell.m */; };
 		7F6024F217433363000971A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F117433363000971A3 /* UIKit.framework */; };
 		7F6024F417433363000971A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F6024F317433363000971A3 /* Foundation.framework */; };
@@ -39,6 +42,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F2900E017480B5C0076C341 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/LoginViewController.h"; sourceTree = "<group>"; };
+		7F2900E117480B5C0076C341 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/LoginViewController.m"; sourceTree = "<group>"; };
+		7F2900E517482AED0076C341 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/SettingsViewController.h"; sourceTree = "<group>"; };
+		7F2900E617482AED0076C341 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsViewController.m; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/SettingsViewController.m"; sourceTree = "<group>"; };
+		7F2900E9174840B70076C341 /* StoredVars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StoredVars.h; path = "/Users/bkrochik/Documents/workspace-xcode/Feedseries/StoredVars.h"; sourceTree = "<absolute>"; };
+		7F2900EA174840B70076C341 /* StoredVars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StoredVars.m; path = "/Users/bkrochik/Documents/workspace-xcode/Feedseries/StoredVars.m"; sourceTree = "<absolute>"; };
 		7F524F921745BA42008175FB /* EpisodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EpisodeCell.h; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/EpisodeCell.h"; sourceTree = "<group>"; };
 		7F524F931745BA42008175FB /* EpisodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EpisodeCell.m; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/EpisodeCell.m"; sourceTree = "<group>"; };
 		7F6024ED17433363000971A3 /* Feedseries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Feedseries.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,16 +133,22 @@
 		7F6024F717433363000971A3 /* Feedseries */ = {
 			isa = PBXGroup;
 			children = (
+				7F2900E9174840B70076C341 /* StoredVars.h */,
+				7F2900EA174840B70076C341 /* StoredVars.m */,
 				7F60250017433363000971A3 /* AppDelegate.h */,
 				7F60250117433363000971A3 /* AppDelegate.m */,
 				7F60250917433363000971A3 /* MainStoryboard.storyboard */,
 				7F60250C17433363000971A3 /* MyShowsViewController.h */,
+				7F2900E017480B5C0076C341 /* LoginViewController.h */,
+				7F2900E117480B5C0076C341 /* LoginViewController.m */,
 				7F60250D17433363000971A3 /* MyShowsViewController.m */,
 				7F60250F17433363000971A3 /* first.png */,
 				7F60251117433363000971A3 /* first@2x.png */,
 				7F6024F817433363000971A3 /* Supporting Files */,
 				7F524F921745BA42008175FB /* EpisodeCell.h */,
 				7F524F931745BA42008175FB /* EpisodeCell.m */,
+				7F2900E517482AED0076C341 /* SettingsViewController.h */,
+				7F2900E617482AED0076C341 /* SettingsViewController.m */,
 			);
 			path = Feedseries;
 			sourceTree = "<group>";
@@ -287,6 +302,9 @@
 				7F60250217433363000971A3 /* AppDelegate.m in Sources */,
 				7F60250E17433363000971A3 /* MyShowsViewController.m in Sources */,
 				7F524F941745BA42008175FB /* EpisodeCell.m in Sources */,
+				7F2900E217480B5C0076C341 /* LoginViewController.m in Sources */,
+				7F2900E717482AED0076C341 /* SettingsViewController.m in Sources */,
+				7F2900EB174840B70076C341 /* StoredVars.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
