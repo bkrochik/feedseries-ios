@@ -10,6 +10,7 @@
 
 @interface MyShowsViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UISearchBar *InputSearch;
 @property (weak, nonatomic) IBOutlet UITableView *myShowsTable;
 
 @end

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F1A6FD8174C4A3E0006C4B7 /* PKRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1A6FBC174C4A3E0006C4B7 /* PKRevealController.m */; };
+		7F1A6FD9174C4A3E0006C4B7 /* PKRevealControllerContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1A6FBE174C4A3E0006C4B7 /* PKRevealControllerContainerView.m */; };
+		7F1A6FDA174C4A3E0006C4B7 /* UIViewController+PKRevealController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1A6FC0174C4A3E0006C4B7 /* UIViewController+PKRevealController.m */; };
+		7F1A6FEE174C4B9B0006C4B7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F1A6FED174C4B9B0006C4B7 /* QuartzCore.framework */; };
 		7F2900E217480B5C0076C341 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2900E117480B5C0076C341 /* LoginViewController.m */; };
 		7F2900E717482AED0076C341 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2900E617482AED0076C341 /* SettingsViewController.m */; };
 		7F2900EB174840B70076C341 /* StoredVars.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F2900EA174840B70076C341 /* StoredVars.m */; };
@@ -42,6 +46,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7F1A6FBB174C4A3E0006C4B7 /* PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKRevealController.h; path = Controller/PKRevealController.h; sourceTree = "<group>"; };
+		7F1A6FBC174C4A3E0006C4B7 /* PKRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PKRevealController.m; path = Controller/PKRevealController.m; sourceTree = "<group>"; };
+		7F1A6FBD174C4A3E0006C4B7 /* PKRevealControllerContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PKRevealControllerContainerView.h; path = Controller/PKRevealControllerContainerView.h; sourceTree = "<group>"; };
+		7F1A6FBE174C4A3E0006C4B7 /* PKRevealControllerContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PKRevealControllerContainerView.m; path = Controller/PKRevealControllerContainerView.m; sourceTree = "<group>"; };
+		7F1A6FBF174C4A3E0006C4B7 /* UIViewController+PKRevealController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+PKRevealController.h"; path = "Controller/UIViewController+PKRevealController.h"; sourceTree = "<group>"; };
+		7F1A6FC0174C4A3E0006C4B7 /* UIViewController+PKRevealController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+PKRevealController.m"; path = "Controller/UIViewController+PKRevealController.m"; sourceTree = "<group>"; };
+		7F1A6FED174C4B9B0006C4B7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7F2900E017480B5C0076C341 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/LoginViewController.h"; sourceTree = "<group>"; };
 		7F2900E117480B5C0076C341 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/LoginViewController.m"; sourceTree = "<group>"; };
 		7F2900E517482AED0076C341 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsViewController.h; path = "../../../../../../Users/bkrochik/Documents/workspace-xcode/Feedseries/Feedseries/SettingsViewController.h"; sourceTree = "<group>"; };
@@ -81,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F1A6FEE174C4B9B0006C4B7 /* QuartzCore.framework in Frameworks */,
 				7F6024F217433363000971A3 /* UIKit.framework in Frameworks */,
 				7F6024F417433363000971A3 /* Foundation.framework in Frameworks */,
 				7F6024F617433363000971A3 /* CoreGraphics.framework in Frameworks */,
@@ -100,9 +112,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7F1A6FB9174C4A3E0006C4B7 /* PKRevealController */ = {
+			isa = PBXGroup;
+			children = (
+				7F1A6FBB174C4A3E0006C4B7 /* PKRevealController.h */,
+				7F1A6FBC174C4A3E0006C4B7 /* PKRevealController.m */,
+				7F1A6FBD174C4A3E0006C4B7 /* PKRevealControllerContainerView.h */,
+				7F1A6FBE174C4A3E0006C4B7 /* PKRevealControllerContainerView.m */,
+				7F1A6FBF174C4A3E0006C4B7 /* UIViewController+PKRevealController.h */,
+				7F1A6FC0174C4A3E0006C4B7 /* UIViewController+PKRevealController.m */,
+			);
+			path = PKRevealController;
+			sourceTree = "<group>";
+		};
 		7F6024E217433363000971A3 = {
 			isa = PBXGroup;
 			children = (
+				7F1A6FB9174C4A3E0006C4B7 /* PKRevealController */,
 				7F6024F717433363000971A3 /* Feedseries */,
 				7F60252617433363000971A3 /* FeedseriesTests */,
 				7F6024F017433363000971A3 /* Frameworks */,
@@ -122,6 +148,7 @@
 		7F6024F017433363000971A3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7F1A6FED174C4B9B0006C4B7 /* QuartzCore.framework */,
 				7F6024F117433363000971A3 /* UIKit.framework */,
 				7F6024F317433363000971A3 /* Foundation.framework */,
 				7F6024F517433363000971A3 /* CoreGraphics.framework */,
@@ -305,6 +332,9 @@
 				7F2900E217480B5C0076C341 /* LoginViewController.m in Sources */,
 				7F2900E717482AED0076C341 /* SettingsViewController.m in Sources */,
 				7F2900EB174840B70076C341 /* StoredVars.m in Sources */,
+				7F1A6FD8174C4A3E0006C4B7 /* PKRevealController.m in Sources */,
+				7F1A6FD9174C4A3E0006C4B7 /* PKRevealControllerContainerView.m in Sources */,
+				7F1A6FDA174C4A3E0006C4B7 /* UIViewController+PKRevealController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +437,10 @@
 		7F60253217433363000971A3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Feedseries/Feedseries-Prefix.pch";
 				INFOPLIST_FILE = "Feedseries/Feedseries-Info.plist";
@@ -418,6 +452,10 @@
 		7F60253317433363000971A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Feedseries/Feedseries-Prefix.pch";
 				INFOPLIST_FILE = "Feedseries/Feedseries-Info.plist";

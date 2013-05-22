@@ -7,6 +7,7 @@
 //
 
 #import "SettingsViewController.h"
+#import "PKRevealController.h"
 
 @interface SettingsViewController ()
 
@@ -28,13 +29,16 @@
     NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
     [defaults  setObject:saveString forKey:@"userLogued"];
     [defaults synchronize];
-    [self performSegueWithIdentifier:@"Login" sender:self];
+    //[self performSegueWithIdentifier:@"Login" sender:self];
+    UIViewController *login = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainStoryboard"];
+    
+    [self presentViewController:login animated:YES completion:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    [self.revealController setMinimumWidth:100.0f maximumWidth:120.0f forViewController:self];
 }
 
 - (void)didReceiveMemoryWarning

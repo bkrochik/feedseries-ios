@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "StoredVars.h"
+#import "PKRevealController.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define kjsonURL [NSURL URLWithString: @"http://feedseries.herokuapp.com/getUser"]
@@ -16,6 +17,7 @@
 {
     IBOutlet UIButton *BtnLogin;
     NSDictionary *jsonResults;
+    PKRevealController *revealController;
 }
 @end
 
@@ -33,10 +35,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Genero menu lateral
+    NSDictionary *options = @{
+                              PKRevealControllerAllowsOverdrawKey : [NSNumber numberWithBool:YES],
+                              PKRevealControllerDisablesFrontViewInteractionKey : [NSNumber numberWithBool:YES]
+                              };
+    
+    UIViewController *leftViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySettings"];
+    
+    UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySeries"];
+    
+    revealController = [PKRevealController revealControllerWithFrontViewController:frontViewController leftViewController:leftViewController options:options];
+    
+    //Inicializo componentes
     self.InputMail.delegate = self;
     self.InputPass.delegate = self;
+    
+    //Si estoy logueado voy a los tabs
     if ([self isLogged]==true) {
-        [self performSegueWithIdentifier:@"MySeries" sender:self];
+        [self presentViewController:revealController animated:YES completion:nil];
     }
 }
 
@@ -77,7 +95,8 @@
     NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
     [defaults  setObject:saveString forKey:@"userLogued"];
     [defaults synchronize];
-    [self performSegueWithIdentifier:@"MySeries" sender:self];
+    //[self performSegueWithIdentifier:@"MySeries" sender:self];
+    [self presentViewController:revealController animated:YES completion:nil];
 }
 
 //Check if user is logged

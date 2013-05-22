@@ -9,6 +9,7 @@
 #import "myShowsViewController.h"
 #import "EpisodeCell.h"
 #import "StoredVars.h"
+#import "PKRevealController.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define allEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodes"]
@@ -23,7 +24,7 @@
     NSInteger offset;
     NSInteger limit;
     UIActivityIndicatorView *spinner;
-    NSURL *kjsonURL;
+    NSURL *kjsonURL;    
 }
 @end
 
@@ -32,7 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+        
     if ([self.restorationIdentifier isEqualToString:@"myShows"])
         kjsonURL=[NSString stringWithFormat:@"%@?email=%@",myEpisodes,[StoredVars sharedInstance].userId];
     else
@@ -43,6 +44,7 @@
     limit=3;
     self.myShowsTable.dataSource=self;
     self.myShowsTable.delegate=self;
+    self.InputSearch.delegate = self;
     
     //Callout
     dispatch_async(kBgQueue, ^{
@@ -60,18 +62,27 @@
             apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
         
         NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
+        
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+            
     });
 
 }
 
 - (void) fetchedData:(NSData *)responseData {
+    //Loading spinner
+    [spinner startAnimating];
+    
+    if(responseData!=nil){
+        NSError* error;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        jsonResults = [json objectForKey:@"data"];
+    }else{
+        jsonResults= [NSMutableArray new];
+    }
+    
     //Stop Spinner
     [spinner stopAnimating];
-    
-    NSError* error;
-    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-    jsonResults = [json objectForKey:@"data"];
     
     [self.myShowsTable reloadData];
 }
@@ -112,8 +123,8 @@
         Cell.title.text=@"Ver mas";
         Cell.subtitle.text=@"";
         Cell.episodeImage.image=nil;
-    }else{
-        Cell.title.text=@"";
+    }else if(dataRows==0){
+        Cell.title.text=@"No hay datos";
         Cell.subtitle.text=@"";
         Cell.episodeImage.image=nil;
     }
@@ -123,13 +134,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.row == dataRows)
-    {
+    //Clouse search bar
+    [_InputSearch resignFirstResponder];
+
+    if(indexPath.row == dataRows && dataRows!=0){
         //More series
         limit+=limit;
-        
-        //Loading spinner
-        [spinner startAnimating];
+
         dispatch_async(kBgQueue, ^{
             //Callout
             NSString *apiEpisodes;
@@ -142,6 +153,15 @@
                 [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
         });
     }
+}
+
+- (IBAction)btnSettings:(id)sender {
+    [self.parentViewController.revealController showViewController:self.parentViewController.revealController.leftViewController];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [_InputSearch resignFirstResponder];
 }
 
 @end
