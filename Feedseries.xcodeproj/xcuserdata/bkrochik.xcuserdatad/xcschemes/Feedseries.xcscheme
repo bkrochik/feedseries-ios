@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7F6024EC17433363000971A3"
-               BuildableName = "Feedseries.app"
+               BuildableName = "Wabila.app"
                BlueprintName = "Feedseries"
                ReferencedContainer = "container:Feedseries.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7F6024EC17433363000971A3"
-            BuildableName = "Feedseries.app"
+            BuildableName = "Wabila.app"
             BlueprintName = "Feedseries"
             ReferencedContainer = "container:Feedseries.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7F6024EC17433363000971A3"
-            BuildableName = "Feedseries.app"
+            BuildableName = "Wabila.app"
             BlueprintName = "Feedseries"
             ReferencedContainer = "container:Feedseries.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7F6024EC17433363000971A3"
-            BuildableName = "Feedseries.app"
+            BuildableName = "Wabila.app"
             BlueprintName = "Feedseries"
             ReferencedContainer = "container:Feedseries.xcodeproj">
          </BuildableReference>

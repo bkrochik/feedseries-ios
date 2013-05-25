@@ -42,6 +42,7 @@
                               PKRevealControllerDisablesFrontViewInteractionKey : [NSNumber numberWithBool:YES]
                               };
     
+    //Init reveal menu
     UIViewController *leftViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySettings"];
     
     UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySeries"];
@@ -51,13 +52,15 @@
     //Inicializo componentes
     self.InputMail.delegate = self;
     self.InputPass.delegate = self;
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{        
     //Si estoy logueado voy a los tabs
-    if ([self isLogged]==true) {
+    if ([self isLogged]!=true) {
         [self presentViewController:revealController animated:YES completion:nil];
     }
 }
-
 - (IBAction)BtnLogin:(id)sender {
     //Callout login
     NSError* error = nil;
@@ -65,6 +68,7 @@
     NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:loginUri] options:NSDataReadingUncached error:&error];
     [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
     
+    NSLog(@"--login---%@---------",loginUri);
     if (error) {
         NSLog(@"---------%@", [error localizedDescription]);
     } else {
@@ -84,6 +88,7 @@
     @catch (NSException *ex) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Error al intentar ingresar, intentelo nuevamente"]
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        NSLog(@"-----%@---------",ex);
         [alert show];
     }
 }
