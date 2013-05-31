@@ -9,6 +9,7 @@
 #import "LoginViewController.h"
 #import "StoredVars.h"
 #import "PKRevealController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define kjsonURL [NSURL URLWithString: @"http://feedseries.herokuapp.com/getUser"]
@@ -18,6 +19,8 @@
     IBOutlet UIButton *BtnLogin;
     NSDictionary *jsonResults;
     PKRevealController *revealController;
+    UIActivityIndicatorView *_activityIndicatorView;
+    UIView *_hudView;
 }
 @end
 
@@ -35,6 +38,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self loadSpinner];
     
     //Genero menu lateral
     NSDictionary *options = @{
@@ -54,21 +58,14 @@
     self.InputPass.delegate = self;
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{        
-    //Si estoy logueado voy a los tabs
-    if ([self isLogged]!=true) {
-        [self presentViewController:revealController animated:YES completion:nil];
-    }
-}
-- (IBAction)BtnLogin:(id)sender {
+- (IBAction)BtnLogin:(id)sender {    
     //Callout login
     NSError* error = nil;
     NSString *loginUri= [NSString stringWithFormat:@"%@?email=%@&pass=%@",kjsonURL,self.InputMail.text,self.InputPass.text];
+
     NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:loginUri] options:NSDataReadingUncached error:&error];
-    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
     
-    NSLog(@"--login---%@---------",loginUri);
     if (error) {
         NSLog(@"---------%@", [error localizedDescription]);
     } else {
@@ -77,49 +74,60 @@
 }
 
 - (void) fetchedData:(NSData *)responseData {
+    //Loading spinner
+    [self.view addSubview:_hudView];
     @try
     {
         NSError* error;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
         jsonResults = [json objectForKey:@"data"];
-        if(jsonResults!=[jsonResults objectForKey:@"email"])
-            [self saveLogin];
+        if([jsonResults objectForKey:@"email"]!=nil)
+            [self saveLogin:[jsonResults objectForKey:@"email"]];
     }
     @catch (NSException *ex) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Error al intentar ingresar, intentelo nuevamente"]
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         NSLog(@"-----%@---------",ex);
+        [_hudView removeFromSuperview];
         [alert show];
     }
 }
 
 //Save
-- (void)saveLogin
+- (void)saveLogin:(NSString*)mail
 {
-    NSString *saveString=self.InputMail.text;
+    [StoredVars sharedInstance].userId=mail;
     NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
-    [defaults  setObject:saveString forKey:@"userLogued"];
+    [defaults  setObject: [StoredVars sharedInstance].userId forKey:@"userLogued"];
     [defaults synchronize];
-    //[self performSegueWithIdentifier:@"MySeries" sender:self];
     [self presentViewController:revealController animated:YES completion:nil];
-}
-
-//Check if user is logged
-- (BOOL)isLogged
-{
-    NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
-    NSString *loadString=[defaults  objectForKey:@"userLogued"];
-    if([loadString isEqualToString:@"666"])
-        return false;
-    else{
-        [StoredVars sharedInstance].userId=loadString;
-        return true;
-    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
+}
+
+//Load Spinner
+- (void) loadSpinner
+{
+    _hudView = [[UIView alloc] initWithFrame:CGRectMake(75, 155, 170, 170)];
+    _hudView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    _hudView.clipsToBounds = YES;
+    _hudView.layer.cornerRadius = 10.0;
+    
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _activityIndicatorView.frame = CGRectMake(65, 40, _activityIndicatorView.bounds.size.width, _activityIndicatorView.bounds.size.height);
+    [_hudView addSubview:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
+    
+    UILabel *_captionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 115, 130, 22)];
+    _captionLabel.backgroundColor = [UIColor clearColor];
+    _captionLabel.textColor = [UIColor whiteColor];
+    _captionLabel.adjustsFontSizeToFitWidth = YES;
+    _captionLabel.textAlignment = UITextAlignmentCenter;
+    _captionLabel.text = @"Loading...";
+    [_hudView addSubview:_captionLabel];
 }
 
 - (void)didReceiveMemoryWarning

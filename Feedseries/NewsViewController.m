@@ -8,9 +8,11 @@
 
 #import "NewsViewController.h"
 #import "EpisodeCell.h"
+#import "ShowViewController.h"
 #import "StoredVars.h"
 #import "UIImageView+WebCache.h"
 #import "PKRevealController.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define newsEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getMessages"]
@@ -24,7 +26,8 @@
     NSInteger offset;
     NSInteger page;
     NSInteger limit;
-    UIActivityIndicatorView *spinner;
+    UIActivityIndicatorView *_activityIndicatorView;
+    UIView *_hudView;
 }
 
 @end
@@ -44,6 +47,9 @@
 {
     [super viewDidLoad];
     
+    //Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMessages) name:@"refreshNews" object:nil];
+
     [self loadSpinner];
     
     //Init
@@ -54,25 +60,19 @@
     self.newsTable.dataSource=self;
     self.newsTable.delegate=self;
     
-    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
-                                        init];
-    refreshControl.tintColor =  [UIColor whiteColor];
-    [refreshControl addTarget:nil action:@selector(updateArray) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = refreshControl;
-
-    //Loading spinner
-    [spinner startAnimating];
-    
     //Get episodes
     [self getMessages];
     
-    //Stop Spinner
-    [spinner stopAnimating];
+    //Init refresh control
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc]
+                                        init];
+    refreshControl.tintColor =  [UIColor blackColor];
+    [refreshControl addTarget:nil action:@selector(updateArray) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
 }
 
 -(void) updateArray{
     [self getMessages];
-    [self.refreshControl endRefreshing];
 }
 
 - (void)didReceiveMemoryWarning
@@ -84,18 +84,6 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
-}
-
-- (void) fetchedData:(NSData *)responseData {
-    if(responseData!=nil){
-        NSError* error;
-        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-        jsonResults = [json objectForKey:@"data"];
-    }else{
-        jsonResults= [NSMutableArray new];
-    }
-    
-    [self.newsTable reloadData];
 }
 
 //Table and Cell styles
@@ -113,7 +101,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     dataRows=[jsonResults count];
-    return dataRows+1;
+    return dataRows;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -130,49 +118,79 @@
         NSDictionary *episode =[jsonResults objectAtIndex:indexPath.row];
         Cell.title.text= [NSString stringWithFormat:@"%@ - %@ ", [episode objectForKey:@"showTitle"], [episode objectForKey:@"firstAired"]];
         Cell.subtitle.text=[NSString stringWithFormat:@"%@  %@x%@ ", [episode objectForKey:@"title"], [episode objectForKey:@"season"], [episode objectForKey:@"number"]];
+        Cell.restorationIdentifier= [NSString stringWithFormat:@"%@", [episode objectForKey:@"id"]];
         
         [Cell.episodeImage setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"poster"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
-        
-    }else if( dataRows>=1){
-        Cell.title.text=@"Ver mas";
-        Cell.subtitle.text=@"";
-        Cell.episodeImage.image=nil;
     }else if(dataRows==0){
-        Cell.title.text=@"No hay datos";
+        Cell.title.text=@"No more news";
         Cell.subtitle.text=@"";
         Cell.episodeImage.image=nil;
     }
     
-    Cell.backgroundColor = [UIColor redColor];
     return Cell;
 }
 
+//Evento cuando se selecciona una selda
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-       
+    EpisodeCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+    if(![cell.subtitle.text isEqualToString:@""]){
+        ShowViewController *showController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"Show"];
+        showController.EpisodeId=cell.restorationIdentifier;
+        showController.BackStoryId=self.restorationIdentifier;
+        [self presentViewController:showController animated:YES completion:nil];
+    }
 }
 
 //Load Spinner
 - (void) loadSpinner
 {
-    //Loading spinner
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake ( self.view.center.x, self.view.center.y );
-    spinner.tag = 12;
-    [self.view addSubview:spinner];
+    _hudView = [[UIView alloc] initWithFrame:CGRectMake(75, 155, 170, 170)];
+    _hudView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    _hudView.clipsToBounds = YES;
+    _hudView.layer.cornerRadius = 10.0;
+    
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _activityIndicatorView.frame = CGRectMake(65, 40, _activityIndicatorView.bounds.size.width, _activityIndicatorView.bounds.size.height);
+    [_hudView addSubview:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
+    
+    UILabel *_captionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 115, 130, 22)];
+    _captionLabel.backgroundColor = [UIColor clearColor];
+    _captionLabel.textColor = [UIColor whiteColor];
+    _captionLabel.adjustsFontSizeToFitWidth = YES;
+    _captionLabel.textAlignment = UITextAlignmentCenter;
+    _captionLabel.text = @"Loading...";
+    [_hudView addSubview:_captionLabel];
+}
+
+- (void) fetchedData:(NSData *)responseData {
+    if(responseData!=nil){
+        NSError* error;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        jsonResults = [json objectForKey:@"data"];
+    }else{
+        jsonResults= [NSMutableArray new];
+    }
+    //Stop Spinner
+    [_hudView removeFromSuperview];
+    [self.refreshControl endRefreshing];
+  
+    //Reload table
+    [self.newsTable reloadData];
 }
 
 - (void) getMessages
 {
-    //Callout
+    //Callout block
     dispatch_async(kBgQueue, ^{
-        NSURL *kjsonURL= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=%@",newsEpisodes,(long)offset,(long)limit,[StoredVars sharedInstance].userId];
-        //Callout
-        NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:kjsonURL]];
-        
-        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        NSString *apiEpisodes;
+        apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=%@",newsEpisodes,(long)offset,(long)limit,[StoredVars sharedInstance].userId];
+        NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
+        if(data!=nil)
+            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
     });
-
 }
 
 @end

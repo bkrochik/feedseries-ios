@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginUtils.h"
+#import "PKRevealController.h"
 
 @implementation AppDelegate
 
@@ -15,8 +17,41 @@
     // Let the device know we want to receive push notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:
      (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-    // Override point for customization after application launch.
+    
+    //Genero menu lateral
+    NSDictionary *options = @{
+                              PKRevealControllerAllowsOverdrawKey : [NSNumber numberWithBool:YES],
+                              PKRevealControllerDisablesFrontViewInteractionKey : [NSNumber numberWithBool:YES]
+                              };
+
+    PKRevealController *revealController;
+    //Init reveal menu
+    UIViewController *leftViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySettings"];
+    leftViewController.title=@"Left Controller";
+    
+    UITabBarController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySeries"];
+    frontViewController.title=@"Front Controller";
+    
+    revealController = [PKRevealController revealControllerWithFrontViewController:frontViewController leftViewController:leftViewController options:options];
+    revealController.title=@"Reveal Controller";
+    
+    //Si estoy logueado voy a los tabs
+    if ([LoginUtils isLogged]==true) {
+        self.window.rootViewController = revealController;
+        [self.window makeKeyAndVisible];
+    }
+    
     return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    if ([LoginUtils isLogged]==true) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshNews" object:self];
+        PKRevealController *viewController=self.window.rootViewController;
+        UITabBarController *tab =viewController.frontViewController;
+        [tab setSelectedIndex:0];
+    }
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -44,11 +79,6 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

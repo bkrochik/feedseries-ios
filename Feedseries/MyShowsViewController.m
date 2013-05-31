@@ -7,10 +7,12 @@
 //
 
 #import "MyShowsViewController.h"
+#import <QuartzCore/QuartzCore.h>
 #import "EpisodeCell.h"
 #import "StoredVars.h"
 #import "UIImageView+WebCache.h"
 #import "PKRevealController.h"
+#import "ShowViewController.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define allEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodes"]
@@ -27,8 +29,9 @@
     NSInteger dataRows;
     NSInteger offset;
     NSInteger limit;
-    UIActivityIndicatorView *spinner;
-    NSURL *kjsonURL;    
+    NSURL *kjsonURL;
+    UIActivityIndicatorView *_activityIndicatorView;
+    UIView *_hudView;
 }
 @end
 
@@ -40,13 +43,16 @@
 {
     [super viewDidLoad];
     
+    //Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabMyShows) name:@"tabMyShows" object:nil];
+    
     [self loadSpinner];
     
     if ([self.restorationIdentifier isEqualToString:@"myShows"])
         kjsonURL=[NSString stringWithFormat:@"%@?email=%@",myEpisodes,[StoredVars sharedInstance].userId];
     else
-        kjsonURL=allEpisodes;
-    
+         kjsonURL=allEpisodes;
+
     //Init
     offset=0;
     limit=5;
@@ -61,11 +67,23 @@
 //Load Spinner
 - (void) loadSpinner
 {
-    //Loading spinner
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake ( self.view.center.x, self.view.center.y );
-    spinner.tag = 12;
-    [self.view addSubview:spinner];
+    _hudView = [[UIView alloc] initWithFrame:CGRectMake(75, 155, 170, 170)];
+    _hudView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    _hudView.clipsToBounds = YES;
+    _hudView.layer.cornerRadius = 10.0;
+    
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _activityIndicatorView.frame = CGRectMake(65, 40, _activityIndicatorView.bounds.size.width, _activityIndicatorView.bounds.size.height);
+    [_hudView addSubview:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
+    
+    UILabel *_captionLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 115, 130, 22)];
+    _captionLabel.backgroundColor = [UIColor clearColor];
+    _captionLabel.textColor = [UIColor whiteColor];
+    _captionLabel.adjustsFontSizeToFitWidth = YES;
+    _captionLabel.textAlignment = UITextAlignmentCenter;
+    _captionLabel.text = @"Loading...";
+    [_hudView addSubview:_captionLabel];
 }
 
 - (void) fetchedData:(NSData *)responseData {    
@@ -77,6 +95,10 @@
         jsonResults= [NSMutableArray new];
     }
     
+    //Stop Spinner
+    [_hudView removeFromSuperview];
+    
+    //Reload table
     [self.myShowsTable reloadData];
 }
 
@@ -100,7 +122,6 @@
 //Table and Cell styles
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
-    NSLog(@"-------%ld",(long)indexPath.row);
     //CELLs
     cell.backgroundColor =[UIColor colorWithPatternImage: [UIImage imageNamed: @"cell-gradient.png"]];
     cell.textLabel.backgroundColor = [UIColor clearColor];
@@ -110,6 +131,7 @@
     tableView.separatorColor= [UIColor colorWithRed: (12/255) green:(12/255) blue: (12/255) alpha: 1.0];
 }
 
+//Carga las celdas de la table
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier= @"Cell";
@@ -124,27 +146,25 @@
         NSDictionary *episode =[jsonResults objectAtIndex:indexPath.row];
         Cell.title.text= [NSString stringWithFormat:@"%@ - %@ ", [episode objectForKey:@"showTitle"], [episode objectForKey:@"firstAired"]];
         Cell.subtitle.text=[NSString stringWithFormat:@"%@  %@x%@ ", [episode objectForKey:@"title"], [episode objectForKey:@"season"], [episode objectForKey:@"number"]];
-        
+        Cell.restorationIdentifier= [NSString stringWithFormat:@"%@", [episode objectForKey:@"id"]];
+
         [Cell.episodeImage setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"poster"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
         
     }else if( dataRows>=1){
-        Cell.title.text=@"Ver mas";
+        Cell.title.text=@"Show more";
         Cell.subtitle.text=@"";
         Cell.episodeImage.image=nil;
     }else if(dataRows==0){
-        Cell.title.text=@"No hay datos";
+        Cell.title.text=@"Not data available";
         Cell.subtitle.text=@"";
         Cell.episodeImage.image=nil;
     }
     
     return Cell;
 }
-
+//Evento cuando se selecciona una celda
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //Clouse search bar
-    [_InputSearch resignFirstResponder];
-
     if(indexPath.row == dataRows && dataRows!=0){
         //More series
         limit+=limit;
@@ -152,11 +172,40 @@
             [self getEpisodesByShow];
         else
             [self getEpisodes];
+    }else if([_InputSearch showsCancelButton]==NO){
+        EpisodeCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        
+        if(![cell.subtitle.text isEqualToString:@""]){
+            ShowViewController *showController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"Show"];
+            showController.EpisodeId=cell.restorationIdentifier;
+            showController.BackStoryId=self.restorationIdentifier;
+            [self presentViewController:showController animated:YES completion:nil];
+        }
     }
+    
+    //Close search bar
+    [_InputSearch resignFirstResponder];
+    [_InputSearch setShowsCancelButton:NO animated:YES];
+
 }
 
 - (IBAction)btnSettings:(id)sender {
     [self.parentViewController.revealController showViewController:self.parentViewController.revealController.leftViewController];
+}
+
+//Notifiactions
+- (void) tabMyShows
+{
+    UITabBarController *tab= self.parentViewController;
+    [tab setSelectedIndex:1];
+    limit=5;
+    [self getEpisodes];
+}
+
+//Search bar
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    searchBar.showsCancelButton=YES;
 }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
@@ -165,6 +214,8 @@
     jsonResults= [NSMutableArray new];
     
     [self getEpisodesByShow];
+    
+    searchBar.showsCancelButton=NO;
     
     [_InputSearch resignFirstResponder];
 }
@@ -179,42 +230,32 @@
 
 -(void)getEpisodesByShow
 {
-    //Loading spinner
-    [spinner startAnimating];
+    //init spinner
+    [self.view addSubview:_hudView];
     
-    dispatch_async(kBgQueue, ^{
-        //Callout
-        NSString *apiEpisodes;
-        apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=null&title=%@",showEpisodes,(long)offset,(long)limit,_InputSearch.text];
-        NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
-        if(data!=nil)
-            [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
-        
-        //Stop Spinner
-        [spinner stopAnimating];
-    });
+    NSString *apiEpisodes;
+    apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=null&title=%@",showEpisodes,(long)offset,(long)limit,_InputSearch.text];
+    NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
+    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
 }
 
 -(void)getEpisodes
 {
     //Loading spinner
-    [spinner startAnimating];
+    [self.view addSubview:_hudView];
     
     //Callout
     dispatch_async(kBgQueue, ^{
         NSString *apiEpisodes;
         //Callout
         if ([self.restorationIdentifier isEqualToString:@"myShows"])
-            apiEpisodes= kjsonURL;
+            apiEpisodes= [NSString stringWithFormat:@"%@&offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
         else
             apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld",kjsonURL,(long)offset,(long)limit];
         
         NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
         
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
-        
-        //Stop Spinner
-        [spinner stopAnimating];
     });
 }
 @end

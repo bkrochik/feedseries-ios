@@ -11,6 +11,7 @@
 @interface StoredVars : NSObject
 
 @property (nonatomic) NSString * userId;
+@property (nonatomic) NSString * episodeId;
 + (StoredVars*) sharedInstance;
 
 @end

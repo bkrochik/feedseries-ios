@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391138703.771933"
+         timestampString = "391463530.160178"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
+         startingLineNumber = "64"
+         endingLineNumber = "64"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/LoginViewController.m"
-         timestampString = "391015890.251956"
+         timestampString = "391375778.276633"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "79"
-         endingLineNumber = "79"
+         startingLineNumber = "78"
+         endingLineNumber = "78"
          landmarkName = "-fetchedData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "390963657.161202"
+         timestampString = "391369258.656166"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "11"
-         endingLineNumber = "11">
+         startingLineNumber = "12"
+         endingLineNumber = "12">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
@@ -54,28 +54,15 @@
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "131"
-         endingLineNumber = "131"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
+         timestampString = "391463530.160178"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "173"
-         endingLineNumber = "173"
+         startingLineNumber = "224"
+         endingLineNumber = "224"
          landmarkName = "-searchBarCancelButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -84,11 +71,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/LoginViewController.m"
-         timestampString = "391015972.274803"
+         timestampString = "391375778.276633"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "52"
-         endingLineNumber = "52"
+         startingLineNumber = "58"
+         endingLineNumber = "58"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -96,64 +83,12 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "Feedseries/LoginViewController.m"
-         timestampString = "391015890.251956"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "94"
-         endingLineNumber = "94"
-         landmarkName = "-fetchedData:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/LoginViewController.m"
-         timestampString = "391015890.251956"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "110"
-         endingLineNumber = "110"
-         landmarkName = "-isLogged"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
+         timestampString = "391463530.160178"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "212"
-         endingLineNumber = "212"
-         landmarkName = "-getEpisodes"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/LoginViewController.m"
-         timestampString = "391016084.594725"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "60"
-         endingLineNumber = "60"
-         landmarkName = "-viewDidAppear:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "214"
-         endingLineNumber = "214"
+         startingLineNumber = "257"
+         endingLineNumber = "257"
          landmarkName = "-getEpisodes"
          landmarkType = "5">
       </FileBreakpoint>
@@ -162,11 +97,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
+         timestampString = "391463530.160178"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "152"
-         endingLineNumber = "152"
+         startingLineNumber = "259"
+         endingLineNumber = "259"
+         landmarkName = "-getEpisodes"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/MyShowsViewController.m"
+         timestampString = "391463530.160178"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "172"
+         endingLineNumber = "172"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -175,89 +123,24 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
+         timestampString = "391463530.160178"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "154"
-         endingLineNumber = "154"
+         startingLineNumber = "174"
+         endingLineNumber = "174"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "204"
-         endingLineNumber = "204"
-         landmarkName = "-getEpisodes"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391216066.81883"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "205"
-         endingLineNumber = "205"
-         landmarkName = "-getEpisodes"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/NewsViewController.m"
-         timestampString = "391208537.411625"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "91"
-         endingLineNumber = "91"
-         landmarkName = "-fetchedData:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/NewsViewController.m"
-         timestampString = "391216066.81883"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "171"
-         endingLineNumber = "171"
-         landmarkName = "-getMessages"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "Feedseries/NewsViewController.m"
-         timestampString = "391216066.81883"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "169"
-         endingLineNumber = "169"
-         landmarkName = "-getMessages"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/AppDelegate.m"
-         timestampString = "391140527.592223"
+         timestampString = "391357063.416224"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "16"
-         endingLineNumber = "16"
+         startingLineNumber = "18"
+         endingLineNumber = "18"
          landmarkName = "-application:didFinishLaunchingWithOptions:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -266,23 +149,257 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391200805.019758"
+         timestampString = "391369258.656166"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "12"
-         endingLineNumber = "12">
+         startingLineNumber = "13"
+         endingLineNumber = "13">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "391215718.679609"
+         timestampString = "391463530.160178"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "105"
-         endingLineNumber = "105"
+         startingLineNumber = "126"
+         endingLineNumber = "126"
          landmarkName = "-tableView:willDisplayCell:forRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/ShowViewController.m"
+         timestampString = "391463530.160178"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "191"
+         endingLineNumber = "191"
+         landmarkName = "-getEpisodesByShowId"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/MyShowsViewController.m"
+         timestampString = "391463530.160178"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "147"
+         endingLineNumber = "147"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/ShowViewController.m"
+         timestampString = "391461602.093954"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "124"
+         endingLineNumber = "124"
+         landmarkName = "-btnAction:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/ShowViewController.m"
+         timestampString = "391461602.093954"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "132"
+         endingLineNumber = "132"
+         landmarkName = "-followShow"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/ShowViewController.m"
+         timestampString = "391461602.093954"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-loadEpisode"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/ShowViewController.m"
+         timestampString = "391461602.093954"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "82"
+         endingLineNumber = "82"
+         landmarkName = "-loadEpisode"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/LoginViewController.m"
+         timestampString = "391375778.276633"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "101"
+         endingLineNumber = "101"
+         landmarkName = "-saveLogin:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/AppDelegate.m"
+         timestampString = "391456685.980202"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "36"
+         endingLineNumber = "36"
+         landmarkName = "-application:didFinishLaunchingWithOptions:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/LoginViewController.m"
+         timestampString = "391375778.276633"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "85"
+         endingLineNumber = "85"
+         landmarkName = "-fetchedData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/LoginViewController.m"
+         timestampString = "391375778.276633"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "84"
+         endingLineNumber = "84"
+         landmarkName = "-fetchedData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/LoginViewController.m"
+         timestampString = "391375778.276633"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "66"
+         endingLineNumber = "66"
+         landmarkName = "-BtnLogin:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/NewsViewController.m"
+         timestampString = "391673448.795245"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/NewsViewController.m"
+         timestampString = "391673759.394954"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "169"
+         endingLineNumber = "169"
+         landmarkName = "-fetchedData:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/NewsViewController.m"
+         timestampString = "391673448.795245"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "118"
+         endingLineNumber = "118"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/AppDelegate.m"
+         timestampString = "391458408.674834"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "51"
+         endingLineNumber = "51"
+         landmarkName = "-applicationDidBecomeActive:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/ShowViewController.m"
+         timestampString = "391673817.041055"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "188"
+         endingLineNumber = "188"
+         landmarkName = "-getEpisodesByShowId"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/NewsViewController.m"
+         timestampString = "391674180.642464"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "138"
+         endingLineNumber = "138"
+         landmarkName = "-tableView:didSelectRowAtIndexPath:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "Feedseries/NewsViewController.m"
+         timestampString = "391674213.177972"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "121"
+         endingLineNumber = "121"
+         landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
