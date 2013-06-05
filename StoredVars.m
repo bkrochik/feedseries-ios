@@ -11,6 +11,7 @@
 @implementation StoredVars
 @synthesize userId;
 @synthesize episodeId;
+@synthesize deviceToken;
 
 
 + (StoredVars*) sharedInstance {
@@ -19,6 +20,7 @@
         myInstance = [[[self class] alloc] init];
         myInstance.userId = nil;
         myInstance.episodeId = nil;
+        myInstance.deviceToken = nil;
     }
     return myInstance;
 }

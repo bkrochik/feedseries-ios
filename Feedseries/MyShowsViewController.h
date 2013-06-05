@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UISearchBar *InputSearch;
 @property (weak, nonatomic) IBOutlet UITableView *myShowsTable;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *BtnRefresh;
 
 
 @end

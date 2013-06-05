@@ -12,6 +12,7 @@
 
 @property (nonatomic) NSString * userId;
 @property (nonatomic) NSString * episodeId;
+@property (nonatomic) NSString * deviceToken;
 + (StoredVars*) sharedInstance;
 
 @end

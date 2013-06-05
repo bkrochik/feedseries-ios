@@ -13,9 +13,11 @@
 #import "UIImageView+WebCache.h"
 #import "PKRevealController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Reachability.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define newsEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getMessages"]
+#define deleteEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/messageDeleteToUser"]
 
 @interface NewsViewController ()
 {
@@ -28,11 +30,13 @@
     NSInteger limit;
     UIActivityIndicatorView *_activityIndicatorView;
     UIView *_hudView;
+    NSIndexPath *selectedPath;
 }
 
 @end
 
 @implementation NewsViewController
+@synthesize newsTable=_newsTable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -47,11 +51,6 @@
 {
     [super viewDidLoad];
     
-    //Notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMessages) name:@"refreshNews" object:nil];
-
-    [self loadSpinner];
-    
     //Init
     offset=0;
     limit=100;
@@ -59,6 +58,35 @@
     
     self.newsTable.dataSource=self;
     self.newsTable.delegate=self;
+
+    
+    //Reachability status
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    
+    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    reach.unreachableBlock = ^(Reachability * reachability)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+        });
+    };
+    
+    [reach startNotifier];
+    
+    //Notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMessages) name:@"refreshNews" object:nil];
+
+    //Init spinner
+    [self loadSpinner];
+    
+    //Loading spinner
+    [self.view addSubview:_hudView];
     
     //Get episodes
     [self getMessages];
@@ -71,6 +99,7 @@
     self.refreshControl = refreshControl;
 }
 
+//Refresh list of news
 -(void) updateArray{
     [self getMessages];
 }
@@ -90,7 +119,7 @@
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
     //CELLs
-    cell.backgroundColor =[UIColor colorWithPatternImage: [UIImage imageNamed: @"cell-gradient.png"]];
+    cell.backgroundColor =[UIColor colorWithPatternImage: [UIImage imageNamed: @"cell-gradient3.png"]];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
@@ -101,46 +130,99 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     dataRows=[jsonResults count];
-    return dataRows;
+    if(dataRows==0)
+        return dataRows+1;
+    else
+        return dataRows;
 }
 
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier= @"Cell";
-    
-    EpisodeCell *Cell =[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if(!Cell){
-        Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+    static NSString *BtnCellIdentifier= @"BtnCel";
+    EpisodeCell *Cell;
     
     if(indexPath.row<dataRows){
+        Cell =[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if(!Cell){
+            Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
         NSDictionary *episode =[jsonResults objectAtIndex:indexPath.row];
-        Cell.title.text= [NSString stringWithFormat:@"%@ - %@ ", [episode objectForKey:@"showTitle"], [episode objectForKey:@"firstAired"]];
-        Cell.subtitle.text=[NSString stringWithFormat:@"%@  %@x%@ ", [episode objectForKey:@"title"], [episode objectForKey:@"season"], [episode objectForKey:@"number"]];
-        Cell.restorationIdentifier= [NSString stringWithFormat:@"%@", [episode objectForKey:@"id"]];
+        Cell.title.text= [NSString stringWithFormat:@"%@", [episode objectForKey:@"showTitle"]];
+        Cell.subtitle.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"title"]];
+        Cell.restorationIdentifier= [NSString stringWithFormat:@"%@", [episode objectForKey:@"messageId"]];
+        Cell.BtnRemove.restorationIdentifier= [NSString stringWithFormat:@"%@", [episode objectForKey:@"messageId"]];
+        Cell.episode.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"number"]];
+        Cell.season.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"season"]];
+        Cell.date.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"firstAired"]];
+        Cell.allEpisodeNumber.text=[NSString stringWithFormat:@"%@x%@ ",[episode objectForKey:@"season"], [episode objectForKey:@"number"]];
         
         [Cell.episodeImage setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"poster"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
     }else if(dataRows==0){
-        Cell.title.text=@"No more news";
-        Cell.subtitle.text=@"";
-        Cell.episodeImage.image=nil;
+        Cell =[tableView dequeueReusableCellWithIdentifier:BtnCellIdentifier];
+        
+        if(!Cell){
+            Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BtnCellIdentifier];
+        }
+        
+        Cell.title.text=@"Pull for more news";
     }
     
     return Cell;
 }
 
-//Evento cuando se selecciona una selda
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//Height
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EpisodeCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        
-    if(![cell.subtitle.text isEqualToString:@""]){
-        ShowViewController *showController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"Show"];
-        showController.EpisodeId=cell.restorationIdentifier;
-        showController.BackStoryId=self.restorationIdentifier;
-        [self presentViewController:showController animated:YES completion:nil];
+    if(indexPath.row<dataRows){
+        return 128;
+    }else if(dataRows==0){
+        return 50;
     }
+}
+
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	// 1 = Tapped yes
+	if (buttonIndex == 1)
+	{
+        EpisodeCell *cell = [self.newsTable cellForRowAtIndexPath:selectedPath];
+        NSUInteger row = [selectedPath row];  
+        if (row < dataRows) {
+            dispatch_async(kBgQueue, ^{
+                [self removeNew:cell.restorationIdentifier];
+            });
+            [jsonResults removeObjectAtIndex:row];
+            [self.newsTable reloadData];
+        }
+	}
+}
+
+-(void)removeNew:(NSString *)messageId{
+    @try
+    {
+        NSString *deleteNewURI =[NSString stringWithFormat: @"%@?messageId=%@",deleteEpisodes,messageId];
+        
+        NSURL *removeShow= [NSURL URLWithString: deleteNewURI];
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest
+                                        requestWithURL:removeShow];
+        
+        [request setHTTPMethod:@"DELETE"];
+        [request addValue:@"application/json"forHTTPHeaderField:@"Content-Type" ];
+        [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
+    }
+    @catch (NSException *ex) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Sorry, we can't add it, Try again"]
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        NSLog(@"-----%@---------",ex);
+        [alert show];
+        [self getMessages];
+    }
+    
 }
 
 //Load Spinner
@@ -166,13 +248,15 @@
 }
 
 - (void) fetchedData:(NSData *)responseData {
+    
     if(responseData!=nil){
         NSError* error;
         NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-        jsonResults = [json objectForKey:@"data"];
+        jsonResults = [[NSMutableArray alloc] initWithArray:[json objectForKey:@"data"]];
     }else{
         jsonResults= [NSMutableArray new];
     }
+    
     //Stop Spinner
     [_hudView removeFromSuperview];
     [self.refreshControl endRefreshing];
@@ -190,7 +274,33 @@
         NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
         if(data!=nil)
             [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:YES];
+        //Stop Spinner
+        [_hudView removeFromSuperview];
     });
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(dataRows!=0){
+        selectedPath =indexPath;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Watchout!"
+                                                           message:@"Did you watch it?"
+                                                          delegate:self
+                                                 cancelButtonTitle:@"No"
+                                                 otherButtonTitles:@"Yes",nil];
+        [alert show];
+    }
+}
+
+//Notifications
+-(void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability * reach = [note object];
+    
+    if(![reach isReachable])
+    {
+        //Another alert
+    }
 }
 
 @end

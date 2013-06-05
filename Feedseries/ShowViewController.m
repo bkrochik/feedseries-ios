@@ -10,7 +10,6 @@
 #import "EpisodeCell.h"
 #import "StoredVars.h"
 #import <QuartzCore/QuartzCore.h>
-#import "PKRevealController.h"
 #import "UIImageView+WebCache.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
@@ -31,6 +30,7 @@
 @implementation ShowViewController
 @synthesize EpisodeId;
 @synthesize BackStoryId;
+@synthesize ShowDetail;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -73,10 +73,24 @@
         NSDictionary *episode =[jsonResults objectAtIndex:0];
     
         [self.ImgShow setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"banner"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
-        self.TxtTitle.text= [NSString stringWithFormat:@"%@ - %@ ", [episode objectForKey:@"showTitle"], [episode objectForKey:@"firstAired"]];
-        self.TxtDescription.text= [NSString stringWithFormat:@"%@  %@x%@ ", [episode objectForKey:@"title"], [episode objectForKey:@"season"], [episode objectForKey:@"number"]];
-        self.TxtOverview.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"overview"]];
-        showId=[NSString stringWithFormat:@"%@", [episode objectForKey:@"showId"]];
+        self.TxtTitle.text= [NSString stringWithFormat:@"%@", [episode objectForKey:@"showTitle"]];        showId=[NSString stringWithFormat:@"%@", [episode objectForKey:@"showId"]];
+    
+        //If is a show detail
+        if([ShowDetail isEqualToString:@"YES"]){
+            self.TxtOverview.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"showOverview"]];
+            self.TxtDescription.text= [NSString stringWithFormat:@"Overview:"];
+            
+            self.TxtDate.hidden=YES;
+            self.TxtEpisode.hidden=YES;
+        }else{
+            self.TxtEpisode.text=[NSString stringWithFormat:@"%@x%@",[episode objectForKey:@"season"], [episode objectForKey:@"number"]];
+            self.TxtDate.text=[NSString stringWithFormat:@"%@",[episode objectForKey:@"firstAired"]];
+            self.TxtDescription.text= [NSString stringWithFormat:@"%@", [episode objectForKey:@"title"]];
+            self.TxtOverview.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"overview"]];
+           
+            self.TxtDate.hidden=NO;
+            self.TxtEpisode.hidden=NO;
+        }
     
         //Check if i follow or not that show
         NSString *haveIt=[NSString stringWithFormat:@"%@", [episode objectForKey:@"iHaveIt"]];

@@ -11,8 +11,8 @@
 #import "EpisodeCell.h"
 #import "StoredVars.h"
 #import "UIImageView+WebCache.h"
-#import "PKRevealController.h"
 #import "ShowViewController.h"
+#import "Reachability.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define allEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodes"]
@@ -43,6 +43,32 @@
 {
     [super viewDidLoad];
     
+    //Init
+    offset=0;
+    limit=5;
+    self.myShowsTable.dataSource=self;
+    self.myShowsTable.delegate=self;
+    self.InputSearch.delegate = self;
+    
+    //Reachability status
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    
+    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    reach.unreachableBlock = ^(Reachability * reachability)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+        });
+    };
+    
+    [reach startNotifier];
+    
     //Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabMyShows) name:@"tabMyShows" object:nil];
     
@@ -52,13 +78,6 @@
         kjsonURL=[NSString stringWithFormat:@"%@?email=%@",myEpisodes,[StoredVars sharedInstance].userId];
     else
          kjsonURL=allEpisodes;
-
-    //Init
-    offset=0;
-    limit=5;
-    self.myShowsTable.dataSource=self;
-    self.myShowsTable.delegate=self;
-    self.InputSearch.delegate = self;
    
     //Get episodes
     [self getEpisodes];
@@ -123,7 +142,7 @@
 - (void)tableView: (UITableView*)tableView willDisplayCell: (UITableViewCell*)cell forRowAtIndexPath: (NSIndexPath*)indexPath
 {
     //CELLs
-    cell.backgroundColor =[UIColor colorWithPatternImage: [UIImage imageNamed: @"cell-gradient.png"]];
+    cell.backgroundColor =[UIColor colorWithPatternImage: [UIImage imageNamed: @"cell-gradient2.png"]];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
@@ -135,33 +154,60 @@
 - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier= @"Cell";
-    
-    EpisodeCell *Cell =[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if(!Cell){
-        Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
+    static NSString *BtnCellIdentifier= @"BtnCel";
+    EpisodeCell *Cell;
     
     if(indexPath.row<dataRows){
+       Cell =[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if(!Cell){
+            Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        }
+        
         NSDictionary *episode =[jsonResults objectAtIndex:indexPath.row];
-        Cell.title.text= [NSString stringWithFormat:@"%@ - %@ ", [episode objectForKey:@"showTitle"], [episode objectForKey:@"firstAired"]];
-        Cell.subtitle.text=[NSString stringWithFormat:@"%@  %@x%@ ", [episode objectForKey:@"title"], [episode objectForKey:@"season"], [episode objectForKey:@"number"]];
+        Cell.title.text= [NSString stringWithFormat:@"%@", [episode objectForKey:@"showTitle"]];
+        Cell.subtitle.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"title"]];
         Cell.restorationIdentifier= [NSString stringWithFormat:@"%@", [episode objectForKey:@"id"]];
-
+        Cell.episode.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"number"]];
+        Cell.season.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"season"]];
+        Cell.date.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"firstAired"]];
+        Cell.allEpisodeNumber.text=[NSString stringWithFormat:@"%@x%@ ",[episode objectForKey:@"season"], [episode objectForKey:@"number"]];
+        //Image
         [Cell.episodeImage setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"poster"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
         
     }else if( dataRows>=1){
+        Cell =[tableView dequeueReusableCellWithIdentifier:BtnCellIdentifier];
+        
+        if(!Cell){
+            Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BtnCellIdentifier];
+        }
+        
         Cell.title.text=@"Show more";
-        Cell.subtitle.text=@"";
-        Cell.episodeImage.image=nil;
     }else if(dataRows==0){
+        Cell =[tableView dequeueReusableCellWithIdentifier:BtnCellIdentifier];
+        
+        if(!Cell){
+            Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BtnCellIdentifier];
+        }
+        
         Cell.title.text=@"Not data available";
-        Cell.subtitle.text=@"";
-        Cell.episodeImage.image=nil;
     }
     
     return Cell;
 }
+
+//Height of cells
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.row<dataRows){
+        return 100;
+    }else if( dataRows>=1){
+        return 50;
+    }else if(dataRows==0){
+        return 50;
+    }
+}
+
 //Evento cuando se selecciona una celda
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -174,11 +220,17 @@
             [self getEpisodes];
     }else if([_InputSearch showsCancelButton]==NO){
         EpisodeCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        
+
         if(![cell.subtitle.text isEqualToString:@""]){
             ShowViewController *showController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"Show"];
             showController.EpisodeId=cell.restorationIdentifier;
             showController.BackStoryId=self.restorationIdentifier;
+            //Check if i will show show detail or episode
+            if ([self.restorationIdentifier isEqualToString:@"myShows"])
+                showController.ShowDetail=@"NO";
+            else
+                showController.ShowDetail=@"YES";
+            
             [self presentViewController:showController animated:YES completion:nil];
         }
     }
@@ -187,10 +239,6 @@
     [_InputSearch resignFirstResponder];
     [_InputSearch setShowsCancelButton:NO animated:YES];
 
-}
-
-- (IBAction)btnSettings:(id)sender {
-    [self.parentViewController.revealController showViewController:self.parentViewController.revealController.leftViewController];
 }
 
 //Notifiactions
@@ -208,9 +256,14 @@
     searchBar.showsCancelButton=YES;
 }
 
+//Buttton search 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    limit=5;
+    if ([self.restorationIdentifier isEqualToString:@"myShows"])
+        limit=5;
+    else
+        limit=1;
+    
     jsonResults= [NSMutableArray new];
     
     [self getEpisodesByShow];
@@ -227,16 +280,22 @@
     [searchBar setShowsCancelButton:NO animated:YES];
 }
 
+//Btn Refresh
+- (IBAction)BtnRefresh:(id)sender {
+    [self getEpisodes];
+}
 
 -(void)getEpisodesByShow
 {
     //init spinner
     [self.view addSubview:_hudView];
     
-    NSString *apiEpisodes;
-    apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=null&title=%@",showEpisodes,(long)offset,(long)limit,_InputSearch.text];
-    NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
-    [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
+    dispatch_async(kBgQueue, ^{
+        NSString *apiEpisodes;
+        apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=null&title=%@",showEpisodes,(long)offset,(long)limit,_InputSearch.text];
+        NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
+        [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
+    });
 }
 
 -(void)getEpisodes
@@ -258,4 +317,16 @@
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
     });
 }
+
+//Notifications
+-(void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability * reach = [note object];
+    
+    if(![reach isReachable])
+    {
+       //Another alert
+    }
+}
+
 @end

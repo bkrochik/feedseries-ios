@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginUtils.h"
+#import "StoredVars.h"
 #import "PKRevealController.h"
 
 @implementation AppDelegate
@@ -23,7 +24,7 @@
                               PKRevealControllerAllowsOverdrawKey : [NSNumber numberWithBool:YES],
                               PKRevealControllerDisablesFrontViewInteractionKey : [NSNumber numberWithBool:YES]
                               };
-
+    
     PKRevealController *revealController;
     //Init reveal menu
     UIViewController *leftViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySettings"];
@@ -37,7 +38,7 @@
     
     //Si estoy logueado voy a los tabs
     if ([LoginUtils isLogged]==true) {
-        self.window.rootViewController = revealController;
+        self.window.rootViewController =revealController;
         [self.window makeKeyAndVisible];
     }
     
@@ -56,6 +57,10 @@
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
 {
+    NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
+    [defaults  setObject: deviceToken forKey:@"deviceToken"];
+    [defaults synchronize];
+    [StoredVars sharedInstance].deviceToken=deviceToken; 
 	NSLog(@"My token is: %@", deviceToken);
 }
 

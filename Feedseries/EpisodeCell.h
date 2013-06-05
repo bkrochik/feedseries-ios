@@ -13,5 +13,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UILabel *subtitle;
 @property (weak, nonatomic) IBOutlet UIImageView *episodeImage;
+@property (weak, nonatomic) IBOutlet UILabel *episode;
+@property (weak, nonatomic) IBOutlet UILabel *season;
+@property (weak, nonatomic) IBOutlet UILabel *allEpisodeNumber;
+@property (weak, nonatomic) IBOutlet UILabel *date;
+@property (weak, nonatomic) IBOutlet UIButton *BtnRemove;
 
 @end

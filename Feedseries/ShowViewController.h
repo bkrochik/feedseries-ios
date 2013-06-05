@@ -14,9 +14,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *TxtTitle;
 @property (weak, nonatomic) IBOutlet UILabel *TxtDescription;
 @property (weak, nonatomic) IBOutlet UITextView *TxtOverview;
+@property (weak, nonatomic) IBOutlet UILabel *TxtEpisode;
+@property (weak, nonatomic) IBOutlet UILabel *TxtDate;
+
 
 @property (weak, nonatomic) NSString *EpisodeId;
 @property (weak, nonatomic) NSString *BackStoryId;
+@property (weak, nonatomic) NSString *ShowDetail;
 @property (weak, nonatomic) NSString *ShowId;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *BtnBack;
 
