@@ -10,6 +10,7 @@
 #import "LoginUtils.h"
 #import "StoredVars.h"
 #import "PKRevealController.h"
+#import "Reachability.h"
 
 @implementation AppDelegate
 
@@ -35,6 +36,25 @@
     
     revealController = [PKRevealController revealControllerWithFrontViewController:frontViewController leftViewController:leftViewController options:options];
     revealController.title=@"Reveal Controller";
+    
+    //Reachability status
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name:kReachabilityChangedNotification
+                                               object:nil];
+    
+    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    
+    reach.unreachableBlock = ^(Reachability * reachability)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+        });
+    };
+    
+    [reach startNotifier];
     
     //Si estoy logueado voy a los tabs
     if ([LoginUtils isLogged]==true) {
@@ -89,6 +109,16 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+//Notifications
+-(void)reachabilityChanged:(NSNotification*)note
+{
+    Reachability * reach = [note object];
+    
+    if(![reach isReachable])
+    {
+    }
 }
 
 @end

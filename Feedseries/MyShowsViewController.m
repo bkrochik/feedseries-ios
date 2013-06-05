@@ -12,7 +12,6 @@
 #import "StoredVars.h"
 #import "UIImageView+WebCache.h"
 #import "ShowViewController.h"
-#import "Reachability.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define allEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getEpisodes"]
@@ -50,24 +49,6 @@
     self.myShowsTable.delegate=self;
     self.InputSearch.delegate = self;
     
-    //Reachability status
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reachabilityChanged:)
-                                                 name:kReachabilityChangedNotification
-                                               object:nil];
-    
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-    
-    reach.unreachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
-                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-        });
-    };
-    
-    [reach startNotifier];
     
     //Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tabMyShows) name:@"tabMyShows" object:nil];
@@ -293,7 +274,8 @@
     dispatch_async(kBgQueue, ^{
         NSString *apiEpisodes;
         apiEpisodes= [NSString stringWithFormat:@"%@?offset=%ld&limit=%ld&email=null&title=%@",showEpisodes,(long)offset,(long)limit,_InputSearch.text];
-        NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodes]];
+        NSString *apiEpisodesEncoded = [apiEpisodes stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSData* data= [NSData dataWithContentsOfURL:[NSURL URLWithString:apiEpisodesEncoded]];
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
     });
 }
@@ -316,17 +298,6 @@
         
         [self performSelectorOnMainThread:@selector(fetchedData:) withObject:data waitUntilDone:NO];
     });
-}
-
-//Notifications
--(void)reachabilityChanged:(NSNotification*)note
-{
-    Reachability * reach = [note object];
-    
-    if(![reach isReachable])
-    {
-       //Another alert
-    }
 }
 
 @end

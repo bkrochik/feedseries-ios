@@ -13,7 +13,6 @@
 #import "UIImageView+WebCache.h"
 #import "PKRevealController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "Reachability.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0)
 #define newsEpisodes [NSURL URLWithString: @"http://feedseries.herokuapp.com/getMessages"]
@@ -58,26 +57,6 @@
     
     self.newsTable.dataSource=self;
     self.newsTable.delegate=self;
-
-    
-    //Reachability status
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reachabilityChanged:)
-                                                 name:kReachabilityChangedNotification
-                                               object:nil];
-    
-    Reachability * reach = [Reachability reachabilityWithHostname:@"www.google.com"];
-    
-    reach.unreachableBlock = ^(Reachability * reachability)
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
-                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-        });
-    };
-    
-    [reach startNotifier];
     
     //Notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getMessages) name:@"refreshNews" object:nil];
@@ -289,17 +268,6 @@
                                                  cancelButtonTitle:@"No"
                                                  otherButtonTitles:@"Yes",nil];
         [alert show];
-    }
-}
-
-//Notifications
--(void)reachabilityChanged:(NSNotification*)note
-{
-    Reachability * reach = [note object];
-    
-    if(![reach isReachable])
-    {
-        //Another alert
     }
 }
 

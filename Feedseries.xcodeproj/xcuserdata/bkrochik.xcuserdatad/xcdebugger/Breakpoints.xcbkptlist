@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392096387.593281"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "83"
-         endingLineNumber = "83"
+         startingLineNumber = "64"
+         endingLineNumber = "64"
          landmarkName = "-viewDidLoad"
          landmarkType = "5">
       </FileBreakpoint>
@@ -45,11 +45,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392097235.182195"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "269"
-         endingLineNumber = "269"
+         startingLineNumber = "250"
+         endingLineNumber = "250"
          landmarkName = "-searchBarSearchButtonClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -58,11 +58,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392097235.182195"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "308"
-         endingLineNumber = "308"
+         startingLineNumber = "290"
+         endingLineNumber = "290"
          landmarkName = "-getEpisodes"
          landmarkType = "5">
       </FileBreakpoint>
@@ -71,11 +71,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392097235.182195"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "310"
-         endingLineNumber = "310"
+         startingLineNumber = "292"
+         endingLineNumber = "292"
          landmarkName = "-getEpisodes"
          landmarkType = "5">
       </FileBreakpoint>
@@ -84,11 +84,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392097235.182195"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "209"
-         endingLineNumber = "209"
+         startingLineNumber = "190"
+         endingLineNumber = "190"
          landmarkName = "-tableView:heightForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -97,11 +97,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392097235.182195"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "212"
-         endingLineNumber = "212"
+         startingLineNumber = "193"
+         endingLineNumber = "193"
          landmarkName = "-tableView:didSelectRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -110,11 +110,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/AppDelegate.m"
-         timestampString = "392101045.092751"
+         timestampString = "392110345.085157"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "19"
-         endingLineNumber = "19"
+         startingLineNumber = "20"
+         endingLineNumber = "20"
          landmarkName = "-application:didFinishLaunchingWithOptions:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -147,11 +147,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/MyShowsViewController.m"
-         timestampString = "392097235.182195"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "168"
-         endingLineNumber = "168"
+         startingLineNumber = "149"
+         endingLineNumber = "149"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -212,11 +212,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101045.092751"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "141"
-         endingLineNumber = "141"
+         startingLineNumber = "120"
+         endingLineNumber = "120"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -225,11 +225,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "251"
-         endingLineNumber = "251"
+         startingLineNumber = "230"
+         endingLineNumber = "230"
          landmarkName = "-fetchedData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -251,11 +251,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101045.092751"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "166"
-         endingLineNumber = "166"
+         startingLineNumber = "145"
+         endingLineNumber = "145"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -264,11 +264,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101045.092751"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "167"
-         endingLineNumber = "167"
+         startingLineNumber = "146"
+         endingLineNumber = "146"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -277,11 +277,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101045.092751"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "164"
-         endingLineNumber = "164"
+         startingLineNumber = "143"
+         endingLineNumber = "143"
          landmarkName = "-tableView:cellForRowAtIndexPath:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -290,11 +290,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "207"
-         endingLineNumber = "207"
+         startingLineNumber = "186"
+         endingLineNumber = "186"
          landmarkName = "-removeNew:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -303,11 +303,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "231"
-         endingLineNumber = "231"
+         startingLineNumber = "210"
+         endingLineNumber = "210"
          landmarkName = "-loadSpinner"
          landmarkType = "5">
       </FileBreakpoint>
@@ -316,11 +316,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "272"
-         endingLineNumber = "272"
+         startingLineNumber = "251"
+         endingLineNumber = "251"
          landmarkName = "-getMessages"
          landmarkType = "5">
       </FileBreakpoint>
@@ -329,11 +329,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101045.092751"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "132"
-         endingLineNumber = "132"
+         startingLineNumber = "111"
+         endingLineNumber = "111"
          landmarkName = "-tableView:numberOfRowsInSection:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -342,11 +342,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "273"
-         endingLineNumber = "273"
+         startingLineNumber = "252"
+         endingLineNumber = "252"
          landmarkName = "-getMessages"
          landmarkType = "5">
       </FileBreakpoint>
@@ -355,11 +355,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "253"
-         endingLineNumber = "253"
+         startingLineNumber = "232"
+         endingLineNumber = "232"
          landmarkName = "-fetchedData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -368,11 +368,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101246.713043"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "252"
-         endingLineNumber = "252"
+         startingLineNumber = "231"
+         endingLineNumber = "231"
          landmarkName = "-fetchedData:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -381,11 +381,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101045.092751"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "117"
-         endingLineNumber = "117"
+         startingLineNumber = "96"
+         endingLineNumber = "96"
          landmarkName = "@implementation NewsViewController"
          landmarkType = "3">
       </FileBreakpoint>
@@ -394,11 +394,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Feedseries/NewsViewController.m"
-         timestampString = "392101099.634067"
+         timestampString = "392109751.207802"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "192"
-         endingLineNumber = "192"
+         startingLineNumber = "171"
+         endingLineNumber = "171"
          landmarkName = "-alertView:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
