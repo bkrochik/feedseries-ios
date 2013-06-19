@@ -8,6 +8,10 @@
 
 #import "SettingsViewController.h"
 #import "PKRevealController.h"
+#import "StoredVars.h"
+
+
+#define deleteSmartURL [NSURL URLWithString: @"http://feedseries.herokuapp.com/deleteSmartPhone"]
 
 @interface SettingsViewController ()
 
@@ -25,16 +29,51 @@
 }
 
 - (IBAction)btnLogout:(id)sender {
-    NSString *saveString=@"666";
-    NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
-    [defaults  setObject:saveString forKey:@"userLogued"];
-    [defaults synchronize];
-    //[self performSegueWithIdentifier:@"Login" sender:self];
-    UIViewController *login = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainStoryboard"];
     
-    [self presentViewController:login animated:YES completion:nil];
+    Boolean *response=[self deleteToken];
+    if(response==YES){
+        NSString *saveString=@"666";
+        NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
+        [defaults  setObject:saveString forKey:@"userLogued"];
+        [defaults synchronize];
+    
+        UIViewController *login = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MainStoryboard"];
+    
+        [self presentViewController:login animated:YES completion:nil];
+    }
 }
 
+-(Boolean)deleteToken
+{
+    NSString *jsonString =[NSString stringWithFormat: @"{'email':'%@','smartType':'apple'}",[StoredVars sharedInstance].userId];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest
+                                    requestWithURL:deleteSmartURL];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
+    [request addValue:@"application/json"forHTTPHeaderField:@"Content-Type" ];
+    
+    NSError        *error = nil;
+    NSHTTPURLResponse* response = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest: request returningResponse: &response error: &error];
+    
+    NSMutableString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSDictionary *JSON =
+    [NSJSONSerialization JSONObjectWithData: [responseString dataUsingEncoding:NSUTF8StringEncoding]
+                                    options: NSJSONReadingMutableContainers
+                                      error: &error];
+    
+    if([response statusCode]==200){
+        return YES;
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Ups!, try it again"]
+                                                       delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alert show];
+        return NO;
+    }
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

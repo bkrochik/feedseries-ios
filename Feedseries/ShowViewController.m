@@ -71,8 +71,8 @@
 -(void)loadEpisode
 {
         NSDictionary *episode =[jsonResults objectAtIndex:0];
-    
-        [self.ImgShow setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"banner"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
+        
+        [self.ImgShow setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"banner"]] placeholderImage:[UIImage imageNamed:@"stub.png"]];
         self.TxtTitle.text= [NSString stringWithFormat:@"%@", [episode objectForKey:@"showTitle"]];        showId=[NSString stringWithFormat:@"%@", [episode objectForKey:@"showId"]];
     
         //If is a show detail
@@ -135,6 +135,9 @@
 }
 
 - (IBAction)btnAction:(id)sender {
+    //Loading spinner
+    [self.view addSubview:_hudView];
+    
     if([self.BtnAction.titleLabel.text isEqualToString:@"Follow"])
         [self followShow];
     else
@@ -198,8 +201,6 @@
 
 -(void)getEpisodesByShowId
 {
-    //Loading spinner
-    [self.view addSubview:_hudView];
     //Callout block
     dispatch_async(kBgQueue, ^{
         NSString *apiEpisodes;

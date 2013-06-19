@@ -40,20 +40,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Init spinner
     [self loadSpinner];
-    
-    //Init reveal menu
-    NSDictionary *options = @{
-                              PKRevealControllerAllowsOverdrawKey : [NSNumber numberWithBool:YES],
-                              PKRevealControllerDisablesFrontViewInteractionKey : [NSNumber numberWithBool:YES]
-                              };
-    
-    UIViewController *leftViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySettings"];
-    
-    UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySeries"];
-    
-    revealController = [PKRevealController revealControllerWithFrontViewController:frontViewController leftViewController:leftViewController options:options];
-    
     
     //Add handlers
     self.BtnLblNew.userInteractionEnabled = YES;
@@ -70,8 +59,8 @@
 }
 
 - (IBAction)BtnLogin:(id)sender {
-    
     if(![self.InputMail.text isEqualToString:@""] && ![self.InputPass.text isEqualToString:@""]){
+        
         //Loading spinner
         [self.view addSubview:_hudView];
         
@@ -96,9 +85,15 @@
 }
 
 - (IBAction)BtnRegister:(id)sender {
+    //Loading spinner
+    [self.view addSubview:_hudView];
+    
     if(![self.InputMail.text isEqualToString:@""] && ![self.InputPass.text isEqualToString:@""] && ![self.InputConfPass.text isEqualToString:@""]){
         [self registerUser];
     }else{
+        //Hide Spinner
+        [_hudView removeFromSuperview];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please fill the gaps and try it again"]
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
@@ -108,12 +103,16 @@
 //Save appleId
 - (void) registerUser
 {
-    //Loading spinner
-    [self.view addSubview:_hudView];
     @try
     {
         if([self.InputPass.text isEqualToString:self.InputConfPass.text]){
-            NSString *jsonString =[NSString stringWithFormat: @"{'email':'%@','pass':'%@','smartType':'apple','smartId':'%@'}",self.InputMail.text,self.InputPass.text,[StoredVars sharedInstance].deviceToken];
+            NSString *token=[NSString stringWithFormat:@"%@",[StoredVars sharedInstance].deviceToken];
+            //Clean apple token
+            token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
+            token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
+            token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+            
+            NSString *jsonString =[NSString stringWithFormat: @"{'email':'%@','pass':'%@','smartType':'apple','smartId':'%@'}",self.InputMail.text,self.InputPass.text,token];
             
             NSMutableURLRequest *request = [NSMutableURLRequest
                                             requestWithURL:newUserURL];
@@ -121,36 +120,46 @@
             [request setHTTPMethod:@"POST"];
             [request setHTTPBody:[jsonString dataUsingEncoding:NSUTF8StringEncoding]];
             [request addValue:@"application/json"forHTTPHeaderField:@"Content-Type" ];
+            
             NSError        *error = nil;
             NSHTTPURLResponse* response = nil;
+            NSData *data = [NSURLConnection sendSynchronousRequest: request returningResponse: &response error: &error];
             
-            [NSURLConnection sendSynchronousRequest: request returningResponse: &response error: &error];
-          
+            NSMutableString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+            NSDictionary *JSON =
+            [NSJSONSerialization JSONObjectWithData: [responseString dataUsingEncoding:NSUTF8StringEncoding]
+                                            options: NSJSONReadingMutableContainers
+                                              error: &error];
+            
             //Check api response
-            if([response statusCode]==200){
+            if([response statusCode]==201){
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_current_queue(), ^{
                     [self saveRegister:self.InputMail.text];
                 });
             }else{
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Data is wrong, please try again"]
+                [_hudView removeFromSuperview];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"%@",[JSON valueForKey:@"message"]]
                                                                delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 [alert show];
             }
         }else{
+            //Hide Spinner
+            [_hudView removeFromSuperview];
+
+            //Show alert
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"The passwords are differet, please try again"]
                                                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
             [alert show];
-            //Hide Spinner
-            [_hudView removeFromSuperview];
         }
     }
     @catch (NSException *ex) {
+        //Hide Spinner
+        [_hudView removeFromSuperview];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Sorry, we can't sign you up, Try again"]
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         NSLog(@"-----%@---------",ex);
         [alert show];
-        //Hide Spinner
-        [_hudView removeFromSuperview];
     }
 }
 
@@ -179,10 +188,12 @@
             [self setAppleId];
     }
     @catch (NSException *ex) {
+        //Hide Spinner
+        [_hudView removeFromSuperview];
+        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Error al intentar ingresar, intentelo nuevamente"]
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         NSLog(@"-----%@---------",ex);
-        [_hudView removeFromSuperview];
         [alert show];
     }
 }
@@ -194,7 +205,10 @@
     NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
     [defaults  setObject: [StoredVars sharedInstance].userId forKey:@"userLogued"];
     [defaults synchronize];
-    [self presentViewController:revealController animated:YES completion:nil];
+    
+    UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySeries"];
+    
+    [self presentViewController:frontViewController animated:YES completion:nil];
 }
 
 //Save after register
@@ -204,9 +218,11 @@
     NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
     [defaults  setObject: [StoredVars sharedInstance].userId forKey:@"userLogued"];
     [defaults synchronize];
-    [self presentViewController:revealController animated:YES completion:nil];
-    PKRevealController *reveal =self.presentedViewController;
-    UITabBarController *tab =reveal.frontViewController;
+    
+    UINavigationController *frontViewController = [[UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"MySeries"];
+    
+    [self presentViewController:frontViewController animated:YES completion:nil];
+    UITabBarController *tab =self.presentedViewController;
     [tab setSelectedIndex:2];
 }
 
@@ -220,7 +236,13 @@
 {
     @try
     {
-        NSString *jsonString =[NSString stringWithFormat: @"{'email':'%@','smartId':'%@','smartType':'apple'}",[StoredVars sharedInstance].userId,[StoredVars sharedInstance].deviceToken];
+        NSString *token=[NSString stringWithFormat:@"%@",[StoredVars sharedInstance].deviceToken];
+        //Clean apple token
+        token=[token stringByReplacingOccurrencesOfString:@" " withString:@""];
+        token=[token stringByReplacingOccurrencesOfString:@">" withString:@""];
+        token=[token stringByReplacingOccurrencesOfString:@"<" withString:@""];
+        
+        NSString *jsonString =[NSString stringWithFormat: @"{'email':'%@','smartId':'%@','smartType':'apple'}",[StoredVars sharedInstance].userId,token];
         
         NSMutableURLRequest *request = [NSMutableURLRequest
                                         requestWithURL:setSmartURL];

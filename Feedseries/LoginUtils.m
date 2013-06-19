@@ -17,7 +17,7 @@
 {
     NSUserDefaults *defaults= [NSUserDefaults standardUserDefaults];
     NSString *loadString=[defaults  objectForKey:@"userLogued"];
-    if([loadString isEqualToString:@"666"])
+    if([loadString isEqualToString:@"666"] || [loadString isEqualToString:@""] || loadString==nil)
         return false;
     else{
         [StoredVars sharedInstance].userId=loadString;

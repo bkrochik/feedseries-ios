@@ -154,7 +154,7 @@
         Cell.date.text=[NSString stringWithFormat:@"%@", [episode objectForKey:@"firstAired"]];
         Cell.allEpisodeNumber.text=[NSString stringWithFormat:@"%@x%@ ",[episode objectForKey:@"season"], [episode objectForKey:@"number"]];
         //Image
-        [Cell.episodeImage setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"poster"]] placeholderImage:[UIImage imageNamed:[episode objectForKey:@"showTitle"]]];
+        [Cell.episodeImage setImageWithURL:[NSURL URLWithString:[episode objectForKey:@"poster"]] placeholderImage:[UIImage imageNamed:@"stub.png"]];
         
     }else if( dataRows>=1){
         Cell =[tableView dequeueReusableCellWithIdentifier:BtnCellIdentifier];
@@ -171,7 +171,10 @@
             Cell= [[EpisodeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:BtnCellIdentifier];
         }
         
-        Cell.title.text=@"Not data available";
+        if ([self.restorationIdentifier isEqualToString:@"myShows"])
+            Cell.title.text=@"Follow a serie";
+        else
+            Cell.title.text=@"Not data available";
     }
     
     return Cell;

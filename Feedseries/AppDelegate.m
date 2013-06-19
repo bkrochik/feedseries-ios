@@ -47,11 +47,7 @@
     
     reach.unreachableBlock = ^(Reachability * reachability)
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
-                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            [alert show];
-        });
+        NSLog(@"Unreacheble network");
     };
     
     [reach startNotifier];
@@ -118,6 +114,11 @@
     
     if(![reach isReachable])
     {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Please check your internet conection and try it again."]
+                                                           delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert show];
+        });
     }
 }
 
